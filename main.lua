@@ -9,6 +9,46 @@ local Tab = Window:Tab({
     Icon = "optional", -- optional
     Locked = false,
 })
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+getgenv().AutoAttack = false
+
+Tab:Toggle({
+    Title = "Auto Attack",
+    Desc = "โจมตีอัตโนมัติด้วยดาบที่ถืออยู่",
+    Value = false,
+    Callback = function(state)
+        getgenv().AutoAttack = state
+
+        if state then
+            task.spawn(function()
+                while getgenv().AutoAttack do
+                    local char = LocalPlayer.Character
+                    if char then
+                        local tool = char:FindFirstChildOfClass("Tool")
+                        if tool then
+                            local swordName = tool.Name
+
+                            ReplicatedStorage
+                                :WaitForChild("Remotes")
+                                :WaitForChild("Serverside")
+                                :FireServer(
+                                    "Server",
+                                    "Sword",
+                                    "M1s",
+                                    swordName,
+                                    1
+                                )
+                        end
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    end
+})
 local RunService = game:GetService("RunService")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -107,7 +147,8 @@ local Toggle = Tab:Toggle({
 
 
 
-local Tab = Window:Tab({
+l
+ocallocal Tab = Window:Tab({
     Title = "Tp",
     Icon = "optional", -- optional
     Locked = false,
@@ -143,8 +184,7 @@ local Dropdown = Tab:Dropdown({
 })
 
 local Button = Tab:Button({
-    Title = "Teleport",
-    Desc = "วาปไปเหนือเกาะ 50 studs",
+    Title = "Telepo    Desc = "วาปไปเหนือเกาะ 50 studs",
     Locked = false,
     Callback = function()
         if not SelectedIsland then return end
