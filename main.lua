@@ -131,7 +131,7 @@ local AllArgs = {
 local loopConn
 
 local Toggle = Tab:Toggle({
-    Title = "Auto All (No Observation)",
+    Title = "Auto Attack",
     Desc = "รวมทุกอย่างอัตโนมัติในปุ่มเดียว",
     Icon = "bird",
     Type = "Checkbox",
@@ -155,6 +155,7 @@ local Toggle = Tab:Toggle({
     end
 })
 
+
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Serverside")
@@ -162,29 +163,31 @@ local Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Serversid
 local args = {
     "Server",
     "Misc",
-    "Haki",
+    "Observation",
     1
 }
 
+local running = false
 local loopConn
 
 local Toggle = Tab:Toggle({
-    Title = "Haki Loop",
-    Desc = "เปิด Haki ค้าง (หยุด loop ได้)",
+    Title = "Observation Loop",
+    Desc = "เปิด Loop Observation (ยิงค้าง)",
     Icon = "bird",
     Type = "Checkbox",
     Value = false,
     Callback = function(state)
-        print("Haki Loop:", state)
+        running = state
+        print("Loop:", state)
 
-        if state then
+        if running then
             -- เริ่ม loop ยิงตลอด
             if loopConn then loopConn:Disconnect() end
             loopConn = RunService.Heartbeat:Connect(function()
                 Remote:FireServer(unpack(args))
             end)
         else
-            -- หยุด loop อย่างเดียว ไม่สั่งปิด Haki
+            -- หยุด loop (แต่ไม่สั่งปิด Observation)
             if loopConn then
                 loopConn:Disconnect()
                 loopConn = nil
