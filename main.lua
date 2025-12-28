@@ -116,6 +116,8 @@ local AllArgs = {
     {"Server","Sword","M1s","Gryphon",1},
     {"Server","Sword","M1s","Solemn Lament",1},
     {"Server","Sword","M1s","Spiritual Katana",1},
+    {"Server","Sword","M1s","Divine Bident",1},
+
 
     {"Server","Sword","M1s","Metal Bat",4},
     {"Server","Sword","Swing","Metal Bat"},
