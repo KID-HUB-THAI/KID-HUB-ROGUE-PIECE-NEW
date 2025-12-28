@@ -98,17 +98,11 @@ local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Serverside")
 
--- รวม args ทั้งหมด (ยกเว้น Observation)
 local AllArgs = {
-    -- Haki ON
-    
-
-    -- Combat
     {"Server","Combat","M1s","Combat",1},
     {"Server","Combat","M1s","Sukuna",1},
     {"Server","Combat","M1s","Aizen",1},
 
-    -- Sword
     {"Server","Sword","M1s","Katana",1},
     {"Server","Sword","M1s","Dual Katana",1},
     {"Server","Sword","M1s","Dark Blade",1},
@@ -122,39 +116,35 @@ local AllArgs = {
     {"Server","Sword","M1s","Gryphon",1},
     {"Server","Sword","M1s","Solemn Lament",1},
     {"Server","Sword","M1s","Spiritual Katana",1},
-    {"Server","Sword","M1s","",1},
-    -- Metal Bat (2 คำสั่ง)
+
     {"Server","Sword","M1s","Metal Bat",4},
     {"Server","Sword","Swing","Metal Bat"},
 }
 
-local loopConn
+local running = false
 
 local Toggle = Tab:Toggle({
     Title = "Auto Attack",
-    Desc = "รวมทุกอย่างอัตโนมัติในปุ่มเดียว",
+    Desc = "รวมทุกอย่างอัตโนมัติในปุ่มเดียว (0.5s)",
     Icon = "bird",
     Type = "Checkbox",
     Value = false,
     Callback = function(state)
         print("Auto All:", state)
+        running = state
 
-        if state then
-            if loopConn then loopConn:Disconnect() end
-            loopConn = RunService.Heartbeat:Connect(function()
-                for _, args in ipairs(AllArgs) do
-                    Remote:FireServer(unpack(args))
+        if running then
+            task.spawn(function()
+                while running do
+                    for _, args in ipairs(AllArgs) do
+                        Remote:FireServer(unpack(args))
+                    end
+                    task.wait(0.5) -- ยิงทุก 0.5 วินาที
                 end
             end)
-        else
-            if loopConn then
-                loopConn:Disconnect()
-                loopConn = nil
-            end
         end
     end
 })
-
 
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
