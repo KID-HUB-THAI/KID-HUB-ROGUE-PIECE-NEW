@@ -154,3 +154,41 @@ local Toggle = Tab:Toggle({
         end
     end
 })
+
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Serverside")
+
+local args = {
+    "Server",
+    "Misc",
+    "Haki",
+    1
+}
+
+local loopConn
+
+local Toggle = Tab:Toggle({
+    Title = "Haki Loop",
+    Desc = "เปิด Haki ค้าง (หยุด loop ได้)",
+    Icon = "bird",
+    Type = "Checkbox",
+    Value = false,
+    Callback = function(state)
+        print("Haki Loop:", state)
+
+        if state then
+            -- เริ่ม loop ยิงตลอด
+            if loopConn then loopConn:Disconnect() end
+            loopConn = RunService.Heartbeat:Connect(function()
+                Remote:FireServer(unpack(args))
+            end)
+        else
+            -- หยุด loop อย่างเดียว ไม่สั่งปิด Haki
+            if loopConn then
+                loopConn:Disconnect()
+                loopConn = nil
+            end
+        end
+    end
+})
