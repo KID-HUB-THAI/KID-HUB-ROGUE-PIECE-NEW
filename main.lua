@@ -101,7 +101,7 @@ local Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Serversid
 -- รวม args ทั้งหมด (ยกเว้น Observation)
 local AllArgs = {
     -- Haki ON
-    {"Server","Misc","Haki",1},
+    
 
     -- Combat
     {"Server","Combat","M1s","Combat",1},
@@ -116,7 +116,13 @@ local AllArgs = {
     {"Server","Sword","M1s","Tanjiro's Nichirin",1},
     {"Server","Sword","M1s","Dual Dagger",1},
     {"Server","Sword","M1s","Yuta's Katana",1},
-
+    {"Server","Sword","M1s","Venuzdonoa",1},
+    {"Server","Sword","M1s","Wado",1},
+    {"Server","Sword","M1s","Tensa Zangetsu",1},
+    {"Server","Sword","M1s","Gryphon",1},
+    {"Server","Sword","M1s","Solemn Lament",1},
+    {"Server","Sword","M1s","Spiritual Katana",1},
+    {"Server","Sword","M1s","",1},
     -- Metal Bat (2 คำสั่ง)
     {"Server","Sword","M1s","Metal Bat",4},
     {"Server","Sword","Swing","Metal Bat"},
